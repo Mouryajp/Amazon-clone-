@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <!-- Add any additional styling or CDN links here -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .cart-item-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item-details img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 10px;
+        }
+
+        .cart-total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .cart-actions {
+            margin-top: 20px;
+        }
+
+        .order-now-btn {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .nav{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-cart {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                background-color: #ff9900;
+                border-radius: 4px;
+                margin-left: 10px;
+                cursor: pointer;
+                text-decoration: none;
+                color: white;
+            }
+
+            .nav-cart i {
+                margin-right: 5px;
+            }
+
+            /* Add hover effect if desired */
+            .nav-cart:hover {
+                background-color: #e68a00;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <div>
+                <a href="/">Go Back to Index</a>
+            </div>
+            <div class="nav-cart border">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <a href="/orders" style="color: white;"> View Orders</a>
+            </div>
+        </div>
+        <h2>Your Cart</h2>
+
+        {% for item in cart_items %}
+            <div class="cart-item">
+                <div class="cart-item-details">
+                    <img src="{{ item.product_details.image_url }}" alt="Product Image">
+                    <div>
+                        <h3>{{ item.product_details.name }}</h3>
+                        <p>Quantity: {{ item.quantity }}</p>
+                        <p>Price: ${{ item.product_details.price }}</p>
+                        <p>Date Added: {{ item.date_added }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="cart-total">
+            Total Price: ${{ total_price }}
+        </div>
+
+        <div class="cart-actions">
+            <a href="/place_order" style="text-decoration: none; color: inherit;"> 
+            <button class="order-now-btn" >Order Now</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

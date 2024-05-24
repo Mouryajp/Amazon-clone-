@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <!-- Add any additional styling or CDN links here -->
+    <style>
+        body {
+            font-family: 'Amazon Ember', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-details {
+            display: flex;
+            gap: 20px;
+        }
+
+        .product-image {
+            flex: 1;
+            max-width: 500px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #ff9900;
+            margin-bottom: 10px;
+        }
+
+        .add-to-cart-btn {
+            background-color: #ff9900;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .nav{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-cart {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                background-color: #ff9900;
+                border-radius: 4px;
+                margin-left: 10px;
+                cursor: pointer;
+                text-decoration: none;
+                color: white;
+            }
+
+            .nav-cart i {
+                margin-right: 5px;
+            }
+
+            /* Add hover effect if desired */
+            .nav-cart:hover {
+                background-color: #e68a00;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <div>
+                <a href="/">Go Back to Index</a>
+            </div>
+            <div class="nav-cart border">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <a href="/cart" style="color: white;"> View Cart</a>
+            </div>
+        </div>
+        {% if product is defined %}
+        <div class="product-details">
+            <div class="product-image">
+                <img src="{{ product.image_url }}" alt="Product Image">
+            </div>
+            <div class="product-info">
+                <div class="product-title">{{product.name}}</div>
+                <div class="product-description">
+                    {{product.description}}
+                </div>
+                <div class="product-price">${{product.price}}</div>
+                <a href="/add_to_cart/{{ product.product_id }}" style="text-decoration: none; color: inherit;">  <button class="add-to-cart-btn" >Add to Cart</button> </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Add any additional scripts or CDN links here -->
+    <script>
+        function addToCart(product_id) {
+            console.log(`${product_id}`);
+            fetch(`/add_to_cart/${product_id}`, {
+                method: 'GET'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle the response, e.g., show a success message
+                console.log('Product added to cart:', data);
+                alert('Product added to cart!');
+            })
+            .catch(error => {
+                // Handle errors, e.g., show an error message
+                console.error('Error adding product to cart:', error);
+                alert('Error adding product to cart. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>

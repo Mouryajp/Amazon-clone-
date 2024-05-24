@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Orders</title>
+    <!-- Add any additional styling or CDN links here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f3f3f3;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* .order {
+          
+        } */
+
+        .order-details {
+            margin-bottom: 10px;
+        }
+
+        .order-items {
+            margin-top: 10px;
+        }
+        .nav{
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-cart {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                background-color: #ff9900;
+                border-radius: 4px;
+                margin-left: 10px;
+                cursor: pointer;
+                text-decoration: none;
+                color: white;
+            }
+
+            .nav-cart i {
+                margin-right: 5px;
+            }
+
+            /* Add hover effect if desired */
+            .nav-cart:hover {
+                background-color: #e68a00;
+            }
+
+       
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="nav">
+            <div>
+                <a href="/">Go Back to Index</a>
+            </div>
+            <div class="nav-cart border">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <a href="/cart" style="color: white;"> View Cart</a>
+            </div>
+        </div>
+        <h2>User Orders</h2>
+        
+        {% for order in orders %}
+            <div class="order">
+                <div class="order-details">
+                    <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+                    <p><strong>Date:</strong> {{ order.order_date }}</p>
+                    <p><strong>Status:</strong> {{ order.status }}</p>
+                </div>
+
+                <div class="order-items">
+                    <p><strong>Order Items:</strong></p>
+                    <ul>
+                        {% for item in order.order_items %}
+                            <li>
+                                {{ item.product_name }} - Quantity: {{ item.quantity }} - Price: ${{ item.price }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
